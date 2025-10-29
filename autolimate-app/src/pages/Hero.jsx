@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hero = () => {
   return (
@@ -11,9 +12,11 @@ const Hero = () => {
         fill
         priority 
       />
-      <button className='border border-white rounded-full px-3 py-1 absolute text-white text-semibold top-[48%] right-[21%] cursor-pointer'>
+      <Link href="/about">
+        <button className='border border-white rounded-full px-3 py-1 absolute text-white text-semibold top-[48%] right-[21%] cursor-pointer'>
         Read Me!
-      </button>
+        </button>
+      </Link>
     </div>
   )
 }
