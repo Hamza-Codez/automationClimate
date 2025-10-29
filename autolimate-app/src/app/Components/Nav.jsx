@@ -27,8 +27,8 @@ const Nav = () => {
         </Link>
 
         <ul className="flex gap-6 items-center">
-          <li>About us</li>
-          <li>Contact</li>
+          <Link href="/about"><li>About My Team</li></Link>
+          <Link href="/contact"><li>Join Us</li></Link>
           <Link href="/features">
             <li className="cursor-pointer">Features</li>
           </Link>
@@ -37,19 +37,19 @@ const Nav = () => {
           {token ? (
             <button
               onClick={handleLogout}
-              className="cursor-pointer bg-gradient-to-br from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold"
+              className="cursor-pointer bg-linear-to-br from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold"
             >
               Logout
             </button>
           ) : (
             <>
               <Link href="/login">
-                <button className="cursor-pointer bg-gradient-to-br from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold -mr-4">
+                <button className="cursor-pointer bg-linear-to-br from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold -mr-4">
                   Login
                 </button>
               </Link>
               <Link href="/signup">
-                <button className="cursor-pointer bg-gradient-to-bl from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold">
+                <button className="cursor-pointer bg-linear-to-bl from-zinc-700 to-gray-300 text-white rounded-sm py-1 px-3 font-bold">
                   Sign Up
                 </button>
               </Link>
