@@ -28,7 +28,6 @@ const Nav = () => {
 
         <ul className="flex gap-6 items-center">
           <Link href="/about"><li>About My Team</li></Link>
-          <Link href="/contact"><li>Join Us</li></Link>
           <Link href="/features">
             <li className="cursor-pointer">Features</li>
           </Link>

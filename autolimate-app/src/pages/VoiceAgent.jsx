@@ -162,7 +162,7 @@ const VoiceAgent = () => {
     <div className="w-[1120px] mx-auto my-10 bg-gradient-to-tr from-black to-gray-300 rounded-xl shadow-lg overflow-hidden">
       <div className="px-6 py-8">
         <h2 className="text-3xl font-bold text-white text-center mb-6">
-          🎙️ Smart Voice AI Agent
+          Smart Voice AI Agent
         </h2>
 
         {/* Text Area */}
@@ -190,8 +190,8 @@ const VoiceAgent = () => {
             onClick={toggleRecording}
             disabled={isProcessing}
             className={`px-6 py-3 rounded-lg font-semibold flex items-center transition-all ${
-              isRecording ? "bg-gray-900" : "bg-black"
-            } text-white`}
+              isRecording ? "bg-white" : "bg-gray-200"
+            } text-black cursor-pointer` }
           >
             {isRecording ? <CircleStop className="mr-2" /> : <Mic className="mr-2" />}
             {isRecording ? "Stop Recording" : "Speak"}
@@ -201,7 +201,7 @@ const VoiceAgent = () => {
           <button
             onClick={handleSend}
             disabled={isProcessing || !transcript.trim()}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg flex items-center"
+            className="px-6 py-3 bg-gray-200 text-black rounded-lg flex items-center cursor-pointer"
           >
             <Send className="mr-2" /> Send
           </button>
@@ -209,7 +209,7 @@ const VoiceAgent = () => {
           <button
             onClick={clearText}
             disabled={isProcessing}
-            className="px-6 py-3 bg-gray-800 text-white rounded-lg flex items-center"
+            className="px-6 py-3 bg-gray-200 text-black rounded-lg flex items-center cursor-pointer"
           >
             <OctagonX className="mr-2" /> Clear
           </button>
