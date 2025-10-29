@@ -1,5 +1,5 @@
 
-import Speechtool from "../pages/Speechtool";
+import Speechtool from "../pages/VoiceAgent";
 import Hero from "../pages/Hero";
 
 export default function Home() {

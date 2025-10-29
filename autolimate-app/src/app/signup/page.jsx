@@ -1,33 +1,73 @@
-"use client"
-import { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff, LogIn } from 'lucide-react';
+"use client";
+import { useState } from "react";
+import axios from "axios";
+import { Mail, Lock, User, Eye, EyeOff, LogIn, MapPin } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    city: "",
+    password: "",
+    confirmPassword: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signup data:', formData);
-    // Handle signup logic here
+
+    if (formData.password !== formData.confirmPassword) {
+      setMessage("Passwords do not match!");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/auth/signup", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // ✅ Store token and city in localStorage
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("city", formData.city);
+
+      setMessage("Signup successful!");
+      console.log("Signup Response:", response.data);
+      router.push('/')
+
+      // Optional: redirect after success
+      // window.location.href = "/home";
+    } catch (error) {
+      console.error("Signup Error:", error);
+      setMessage("Signup failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleSignup = () => {
-    console.log('Google signup clicked');
+    console.log("Google signup clicked");
     // Handle Google OAuth here
   };
 
@@ -48,7 +88,10 @@ const Signup = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div className="space-y-2">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Full Name
               </label>
               <div className="relative">
@@ -62,7 +105,7 @@ const Signup = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg "
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -70,7 +113,10 @@ const Signup = () => {
 
             {/* Email Field */}
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -84,15 +130,43 @@ const Signup = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg "
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg"
                   placeholder="Enter your email"
+                />
+              </div>
+            </div>
+
+            {/* ✅ City Field (new) */}
+            <div className="space-y-2">
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium text-gray-700"
+              >
+                City
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <MapPin className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  required
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg"
+                  placeholder="Enter your city"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="relative">
@@ -102,11 +176,11 @@ const Signup = () => {
                 <input
                   id="password"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg "
+                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg"
                   placeholder="Create a password"
                 />
                 <button
@@ -125,7 +199,10 @@ const Signup = () => {
 
             {/* Confirm Password Field */}
             <div className="space-y-2">
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm Password
               </label>
               <div className="relative">
@@ -135,16 +212,18 @@ const Signup = () => {
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? "text" : "password"}
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg transition-colors"
+                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg"
                   placeholder="Confirm your password"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onClick={() =>
+                    setShowConfirmPassword(!showConfirmPassword)
+                  }
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showConfirmPassword ? (
@@ -159,11 +238,16 @@ const Signup = () => {
             {/* Submit Button */}
             <button
               type="submit"
+              disabled={loading}
               className="cursor-pointer w-full bg-linear-to-r from-zinc-600 to-black text-white py-3 px-4 rounded-lg font-semibold hover:from-zinc-700 hover:to-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
             >
-              Create Account
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
+
+          {message && (
+            <p className="text-center text-sm text-gray-700 mt-4">{message}</p>
+          )}
 
           {/* Divider */}
           <div className="mt-8 mb-6">
@@ -172,12 +256,14 @@ const Signup = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">
+                  Or continue with
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Google Signup Button */}
+          {/* Google Signup */}
           <button
             onClick={handleGoogleSignup}
             className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 cursor-pointer"
@@ -206,8 +292,11 @@ const Signup = () => {
           {/* Login Link */}
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Already have an account?{' '}
-              <a href="/login" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
+              Already have an account?{" "}
+              <a
+                href="/login"
+                className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+              >
                 Sign in
               </a>
             </p>
