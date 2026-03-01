@@ -34,41 +34,43 @@ const FeaturesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen w-[1120px] mx-auto bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
+    /* Changed w-[1120px] to w-full max-w-[1120px] for responsiveness */
+    <div className="min-h-screen w-full max-w-[1120px] mx-auto bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Features</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Features</h1>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
             Discover how our platform helps you maintain a healthy and balanced lifestyle
           </p>
         </div>
 
         {/* Features List with Zig-Zag Layout */}
-        <div className="space-y-20">
-          {features.map((feature, index) => (
+        <div className="space-y-16 md:space-y-20">
+          {features.map((feature) => (
             <div
               key={feature.id}
               className={`flex flex-col ${
                 feature.imagePosition === 'right' ? 'lg:flex-row' : 'lg:flex-row-reverse'
               } items-center justify-between gap-8 lg:gap-12`}
             >
-              {/* Image */}
+              {/* Image Container - Fixed scaling for consistency */}
               <div className="w-full lg:w-1/3">
-                <div className="relative h-64 lg:h-80 w-full rounded-lg overflow-hidden shadow-xl">
+                <div className="relative h-64 lg:h-80 w-full rounded-lg overflow-hidden shadow-xl bg-gray-50">
                   <Image
                     src={feature.image}
                     alt={feature.title}
                     fill
-                    // className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
                   />
                 </div>
               </div>
 
-              {/* Content */}
+              {/* Content Container */}
               <div className="w-full lg:w-1/2">
                 <div className="text-center lg:text-left">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-linear-to-br from-zinc-900 to-gray-300 rounded-full mb-4">
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-linear-to-br from-zinc-900 to-gray-300 rounded-full mb-4 shadow-md">
                     <span className="text-lg font-semibold text-white">
                       {feature.id}
                     </span>
@@ -76,7 +78,7 @@ const FeaturesPage = () => {
                   <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                     {feature.title}
                   </h2>
-                  <p className="text-lg text-gray-600 leading-relaxed">
+                  <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>

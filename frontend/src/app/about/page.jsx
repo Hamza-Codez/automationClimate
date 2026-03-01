@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Code2, Server, Bug, Target, Lightbulb, Wrench } from "lucide-react";
 import Image from "next/image";
@@ -9,19 +10,10 @@ const PersonasPage = () => {
       name: "Hamza Ahmad",
       role: "Frontend Developer and Team Lead",
       image: "/hamza.jpg",
-      goals:
-        "To lead the team in designing an intuitive and attractive user interface for the AI Agent Application within the 24-hour UAF CS Hackathon 2025. Focused on delivering a smooth, responsive, and user-friendly experience under time pressure.",
-      skills: [
-        "React",
-        "Next.js",
-        "Tailwind CSS",
-        "UI/UX Design",
-        "Responsive Design",
-      ],
-      contributions:
-        "Developed key components of the user interface, including the dashboard, navigation bar, and footer. Implemented responsive design techniques to ensure optimal viewing on various screen sizes.",
-      frustrations:
-        "Faced time constraints during UI optimization and struggled with integrating multiple components simultaneously. Managed these by prioritizing core features and using reusable design patterns to speed up development.",
+      goals: "To lead the team in designing an intuitive and attractive user interface for the AI Agent Application within the 24-hour UAF CS Hackathon 2025.",
+      skills: ["React", "Next.js", "Tailwind CSS", "UI/UX Design", "Responsive Design"],
+      contributions: "Developed key components of the user interface, including the dashboard, navigation bar, and footer.",
+      frustrations: "Faced time constraints during UI optimization. Managed these by prioritizing core features and using reusable design patterns.",
       color: "blue",
     },
     {
@@ -29,19 +21,10 @@ const PersonasPage = () => {
       name: "Zubair Malik",
       role: "Backend Developer",
       image: "/zubii.jpg",
-      goals:
-        "To develop a secure and scalable backend for the AI Agent Application during the UAF CS Hackathon 2025. Aimed to ensure reliable API performance and smooth communication between the frontend and backend within limited time.",
-      skills: [
-        "Node.js",
-        "Express",
-        "MongoDB",
-        "RESTful APIs",
-        "Python Fast API",
-      ],
-      contributions:
-        "Developed the backend architecture, including API endpoints for data retrieval and manipulation. Implemented user authentication and authorization mechanisms.",
-      frustrations:
-        "Encountered challenges in handling API response times and database optimization due to limited testing time. Resolved them through rapid debugging and simplifying API logic for stability.",
+      goals: "To develop a secure and scalable backend for the AI Agent Application during the UAF CS Hackathon 2025.",
+      skills: ["Node.js", "Express", "MongoDB", "RESTful APIs", "Python Fast API"],
+      contributions: "Developed the backend architecture and API endpoints. Implemented user authentication mechanisms.",
+      frustrations: "Encountered challenges in handling API response times. Resolved them through rapid debugging and logic simplification.",
       color: "green",
     },
     {
@@ -49,147 +32,95 @@ const PersonasPage = () => {
       name: "Faaiz Ahmad",
       role: "Project Moderator & Debugging Strategist",
       image: "/faazi.webp",
-      goals:
-        "To coordinate the team effectively during the 24-hour hackathon and ensure smooth debugging and project flow. Focused on maintaining stability, fixing integration issues, and improving usability under intense time pressure.",
-      skills: [
-        "Python",
-        "Debugging",
-        "Database Management",
-        "Usability Testing",
-      ],
-      contributions:
-        "Code base management and debugging skills. Conducted usability testing to improve overall user experience.",
-      frustrations:
-        "Faced the challenge of managing multiple debugging issues like Data inconsistency while coordinating between team members under tight deadlines. Overcame this by organizing quick syncs and maintaining a clear issue-tracking workflow.",
+      goals: "To coordinate the team effectively and ensure smooth debugging and project flow under intense time pressure.",
+      skills: ["Python", "Debugging", "Database Management", "Usability Testing"],
+      contributions: "Code base management and debugging. Conducted usability testing to improve overall user experience.",
+      frustrations: "Faced data inconsistency challenges. Overcame this by organizing quick syncs and maintaining a clear issue-tracking workflow.",
       color: "purple",
     },
   ];
 
   const getColorClasses = (color) => {
     const colors = {
-      blue: "bg-blue-100 text-blue-600 border-blue-200",
-      green: "bg-green-100 text-green-600 border-green-200",
-      purple: "bg-purple-100 text-purple-600 border-purple-200",
+      blue: "bg-blue-50 text-blue-700 border-blue-100",
+      green: "bg-green-50 text-green-700 border-green-100",
+      purple: "bg-purple-50 text-purple-700 border-purple-100",
     };
     return colors[color] || colors.blue;
   };
 
   return (
-    <div className="min-h-screen w-[1120px] max-w-7xl mx-auto bg-white text-black py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-white text-slate-900 py-12 px-6">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-3">
             Development Team
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-sm text-slate-500 max-w-lg mx-auto">
             Meet the talented individuals behind the Smart AI Agent Tracker
-            application
           </p>
         </div>
 
-        {/* Personas List with Zig-Zag Layout */}
-        <div className="space-y-20">
+        {/* Personas List */}
+        <div className="space-y-24">
           {personas.map((persona, index) => (
             <div
               key={persona.id}
               className={`flex flex-col ${
-                index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } items-center justify-between gap-8 lg:gap-12`}
+                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } items-center gap-8 md:gap-16`}
             >
-              {/* Image/Icon Section */}
-              <div className="w-full lg:w-2/5">
-                <div className="relative">
-                  <div className="w-32 h-32 mx-auto lg:mx-0 lg:w-90 lg:h-90 rounded-full bg-linear-to-bl from-zinc-400 to-white flex items-center justify-center border-4 border-gray-200">
-                    <Image
-                      src={persona.image}
-                      alt={persona.name}
-                      width={200} 
-                      height={200} 
-                      className="rounded-full object-cover shadow-lg"
-                    />
-                  </div>
-                  {/* Decorative Element */}
-                  <div
-                    className={`absolute -inset-4 rounded-full ${
-                      getColorClasses(persona.color).split(" ")[0]
-                    } opacity-20 -z-10`}
-                  ></div>
+              {/* Image Section - Fixed Circle logic */}
+              <div className="relative flex-shrink-0">
+                <div className="relative z-10 w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white shadow-xl ring-1 ring-slate-200">
+                  <Image
+                    src={persona.image}
+                    alt={persona.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
+                {/* Decorative background circle */}
+                <div className={`absolute -inset-2 rounded-full opacity-20 blur-sm ${index % 2 === 0 ? 'bg-slate-300' : 'bg-slate-200'}`}></div>
               </div>
 
               {/* Content Section */}
-              <div className="w-full lg:w-3/5">
-                <div className="text-center lg:text-left">
-                  {/* Name and Role */}
-                  <div className="mb-6">
-                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
-                      {persona.name}
-                    </h2>
-                    <p className="text-lg text-gray-600 font-medium">
-                      {persona.role}
-                    </p>
-                  </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="mb-4">
+                  <h2 className="text-2xl font-bold text-slate-900">{persona.name}</h2>
+                  <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide">{persona.role}</p>
+                </div>
 
+                <div className="grid grid-cols-1 gap-4 text-sm">
                   {/* Goals */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Target className="h-5 w-5 text-gray-600" />
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Goals
-                      </h3>
+                  <div>
+                    <div className="flex items-center justify-center md:justify-start gap-2 mb-1 text-slate-800 font-bold">
+                      <Target className="h-4 w-4" /> <span>Goals</span>
                     </div>
-                    <p className="text-gray-600 leading-relaxed">
-                      {persona.goals}
-                    </p>
+                    <p className="text-slate-600 leading-relaxed">{persona.goals}</p>
                   </div>
 
                   {/* Skills */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Lightbulb className="h-5 w-5 text-gray-600" />
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Skills
-                      </h3>
+                  <div>
+                    <div className="flex items-center justify-center md:justify-start gap-2 mb-2 text-slate-800 font-bold">
+                      <Lightbulb className="h-4 w-4" /> <span>Skills</span>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {persona.skills.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className={`px-3 py-1 rounded-full text-sm font-medium border ${getColorClasses(
-                            persona.color
-                          )}`}
-                        >
+                    <div className="flex flex-wrap justify-center md:justify-start gap-1.5">
+                      {persona.skills.map((skill, sIdx) => (
+                        <span key={sIdx} className={`px-2.5 py-0.5 rounded-md text-[11px] font-bold border ${getColorClasses(persona.color)}`}>
                           {skill}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Contributions */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Wrench className="h-5 w-5 text-gray-600" />
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Contributions
-                      </h3>
-                    </div>
-                    <p className="text-gray-600 leading-relaxed">
-                      {persona.contributions}
-                    </p>
-                  </div>
-
-                  {/* Frustrations & Solutions */}
+                  {/* Challenges */}
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Bug className="h-5 w-5 text-gray-600" />
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Challenges & Solutions
-                      </h3>
+                    <div className="flex items-center justify-center md:justify-start gap-2 mb-1 text-slate-800 font-bold">
+                      <Bug className="h-4 w-4" /> <span>Challenges</span>
                     </div>
-                    <p className="text-gray-600 leading-relaxed">
-                      {persona.frustrations}
-                    </p>
+                    <p className="text-slate-600 leading-relaxed italic">"{persona.frustrations}"</p>
                   </div>
                 </div>
               </div>

@@ -22,74 +22,68 @@ const SimpleLoginPage = () => {
         password,
       });
 
-      console.log("Login Response:", response.data);
-
-      // ✅ Save token & user info in localStorage
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       setMessage("Login successful!");
-      router.push("/"); // ✅ Navigate to home
+      router.push("/"); 
 
     } catch (error) {
-      console.error("Login Error:", error);
-      setMessage("Invalid email or password. Please try again.");
+      setMessage("Invalid email or password.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gradient-to-tr from-slate-500/40 to-slate-100 flex items-center justify-center px-4">
+      {/* Reduced max-width to md (28rem) for a tighter, more modern look */}
+      <div className="max-w-sm w-full bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
         <div className="text-center">
-          <div className="mx-auto w-12 h-12 bg-linear-to-br from-black to-zinc-300 rounded-full flex items-center justify-center">
+          <div className="mx-auto w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center mb-4">
             <LogIn className="h-6 w-6 text-white" />
           </div>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">Welcome back</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">Welcome back</h2>
+          <p className="mt-1 text-xs text-slate-500">
             Please sign in to your account
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <div className="space-y-3">
+            {/* Email Field */}
+            <div className="space-y-1">
+              <label className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">Email</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   id="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="Email address"
+                  className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md outline-none focus:border-slate-500 transition-all placeholder:text-slate-300"
+                  placeholder="name@example.com"
                 />
               </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+            {/* Password Field */}
+            <div className="space-y-1">
+              <div className="flex justify-between items-center">
+                <label className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">Password</label>
+                <a href="#" className="text-[10px] font-medium text-slate-400 hover:text-slate-600">Forgot?</a>
+              </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <input
                   id="password"
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="Password"
+                  className="block w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md outline-none focus:border-slate-500 transition-all"
+                  placeholder="••••••••"
                 />
               </div>
             </div>
@@ -98,27 +92,33 @@ const SimpleLoginPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="cursor-pointer group relative w-full flex justify-center py-2 px-4 text-sm font-medium rounded-md text-white bg-linear-to-br from-black to-zinc-400 hover:bg-zinc-700 transition duration-200"
+            className="w-full flex items-center justify-center py-2.5 px-4 text-sm font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 active:scale-[0.98] transition-all disabled:opacity-70 cursor-pointer"
           >
-            <LogIn className="h-4 w-4 mr-2" />
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? (
+              "Signing in..."
+            ) : (
+              <>
+                <LogIn className="h-4 w-4 mr-2" /> Sign in
+              </>
+            )}
           </button>
 
-          {/* ✅ Message Feedback */}
           {message && (
-            <p
-              className={`text-center text-sm mt-3 ${
-                message.includes("successful") ? "text-green-600" : "text-red-600"
+            <p className={`text-center text-[12px] font-medium ${
+                message.includes("successful") ? "text-emerald-600" : "text-rose-600"
               }`}
             >
               {message}
             </p>
           )}
 
-          <div className="text-center">
-            <a href="/signup" className="text-sm text-zinc-600 hover:font-semibold">
-              Don't have an account? Sign up
-            </a>
+          <div className="pt-2 text-center border-t border-slate-100">
+            <p className="text-xs text-slate-500">
+              Don't have an account?{" "}
+              <a href="/signup" className="text-slate-900 font-bold hover:underline underline-offset-4">
+                Sign up
+              </a>
+            </p>
           </div>
         </form>
       </div>
